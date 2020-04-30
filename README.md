@@ -18,4 +18,4 @@ var imageCropping = new ImageCropping({
 
 ### 使用方法
 
-[浏览 HTML 文件](https://github.com/aloneqi/imageCropping/blob/master/index.html)。
+[浏览 HTML 文件](https://github.com/aloneqi/imageCropping/blob/master/index.html)
