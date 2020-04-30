@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Document</title>
+    </head>
+    <body>
+        <canvas></canvas>
+        <input type="file" name="file" /><button>裁剪</button>
+    </body>
+    <script src="./imageCropping.js"></script>
+    <script>
+        var myImg = new Image(),
+            btn = document.querySelector('button'),
+            file = document.querySelector('input'),
+            imageCropping;
+
+        file.onchange = function (e) {
+            var resultFile = e.target.files[0];
+            if (resultFile) {
+                var reader = new FileReader();
+                reader.readAsDataURL(resultFile);
+                reader.onload = function (e) {
+                    var urlData = this.result;
+                    myImg.src = urlData;
+                    myImg.onload = function () {
+                        imageCropping = new ImageCropping({
+                            canvas: document.querySelector('canvas'),
+                            img: myImg,
+                            maxWidth: 800
+                        });
+                    };
+                };
+            }
+        };
+
+        btn.onclick = function () {
+            var croppedImg = new Image(),
+                    newWin;
+                croppedImg.src = imageCropping.clipping();
+                newWin = window.open('', '_blank');
+                newWin.document.write(croppedImg.outerHTML);
+                newWin.document.close();
+        };
+    </script>
+</html>
