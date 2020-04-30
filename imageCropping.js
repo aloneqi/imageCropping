@@ -262,8 +262,8 @@ ImageCropping.prototype = {
             height = this.img.height,
             rate;
 
-        maxWidth = maxWidth || this.canvasWidth;
-        maxHeight = maxHeight || this.canvasHeight;
+        maxWidth = maxWidth;
+        maxHeight = maxHeight;
 
         if (maxWidth) {
             rate = maxWidth / width;

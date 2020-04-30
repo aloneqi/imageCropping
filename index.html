@@ -24,11 +24,17 @@
                     var urlData = this.result;
                     myImg.src = urlData;
                     myImg.onload = function () {
-                        imageCropping = new ImageCropping({
-                            canvas: document.querySelector('canvas'),
-                            img: myImg,
-                            maxWidth: 800
-                        });
+                        if (!imageCropping) {
+                            imageCropping = new ImageCropping({
+                                canvas: document.querySelector('canvas'),
+                                img: myImg,
+                                maxWidth: 800,
+                            });
+                            return;
+                        }
+                        imageCropping.img = myImg;
+                        imageCropping.fitSize(800);
+                        imageCropping.draw();
                     };
                 };
             }
@@ -36,11 +42,11 @@
 
         btn.onclick = function () {
             var croppedImg = new Image(),
-                    newWin;
-                croppedImg.src = imageCropping.clipping();
-                newWin = window.open('', '_blank');
-                newWin.document.write(croppedImg.outerHTML);
-                newWin.document.close();
+                newWin;
+            croppedImg.src = imageCropping.clipping();
+            newWin = window.open('', '_blank');
+            newWin.document.write(croppedImg.outerHTML);
+            newWin.document.close();
         };
     </script>
 </html>
