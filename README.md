@@ -2,7 +2,7 @@
 
 支持正反向裁剪。
 
-<img src="./readmeImg/picture.jpg" width="300" />
+<img src="./readmeImg/picture.png" width="300" />
 <br/>
 
 ## 代码片段
