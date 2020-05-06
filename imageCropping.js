@@ -1,11 +1,11 @@
 var ImageCropping = function (deploy) {
     this.canvas = deploy.canvas;
     this.img = deploy.img;
-    this.fitSize(deploy.maxWidth, deploy.maxHeight);
-    this.init();
+    this.init(deploy.maxWidth, deploy.maxHeight);
 };
 ImageCropping.prototype = {
-    init: function () {
+    init: function (maxWidth, maxHeight) {
+        this.fitSize(maxWidth, maxHeight);
         this.ctx = this.canvas.getContext('2d');
         this.isMousemove = false; // 捕获绘制区域的方法或光标 值是true时捕获方法，是false时捕获光标
         this.isMouseover = false;
@@ -16,12 +16,6 @@ ImageCropping.prototype = {
         this.coordinatePoint = []; // 记录上一个点的坐标位置
         this.lineDash = [5, 5]; // 虚线间隔宽度
         this.borderWidth = 2; // 边框宽度
-
-        // 初始化高亮区域的位置和大小
-        this.brightAreaRect = [
-            [(this.canvasWidth - this.canvasWidth / 3) / 2, this.canvasWidth / 3],
-            [(this.canvasHeight - this.canvasWidth / 3) / 2, this.canvasWidth / 3],
-        ];
 
         this.canvas.onmouseover = function () {
             this.isMouseover = true;
@@ -235,15 +229,9 @@ ImageCropping.prototype = {
         // 裁剪图片
         !this.generateImgCtx && (this.generateImgCtx = document.createElement('canvas').getContext('2d'));
 
-        this.generateImgCtx.canvas.width = Math.abs(this.brightAreaRect[0][1]);
-        this.generateImgCtx.canvas.height = Math.abs(this.brightAreaRect[1][1]);
-        this.generateImgCtx.drawImage(
-            this.img,
-            -Math.min(this.brightAreaRect[0][0] + this.brightAreaRect[0][1], this.brightAreaRect[0][0]),
-            -Math.min(this.brightAreaRect[1][0] + this.brightAreaRect[1][1], this.brightAreaRect[1][0]),
-            this.canvasWidth,
-            this.canvasHeight
-        );
+        this.generateImgCtx.canvas.width = this.brightAreaRect[0][1];
+        this.generateImgCtx.canvas.height = this.brightAreaRect[1][1];
+        this.generateImgCtx.drawImage(this.img, -this.brightAreaRect[0][0], -this.brightAreaRect[1][0], this.canvasWidth, this.canvasHeight);
 
         return this.generateImgCtx.canvas.toDataURL();
     },
@@ -283,6 +271,17 @@ ImageCropping.prototype = {
 
         this.canvasWidth = this.canvas.width = width;
         this.canvasHeight = this.canvas.height = height;
+
+        // 初始化高亮区域的位置和大小
+        this.brightAreaRect = [
+            [(this.canvasWidth - this.canvasWidth / 3) / 2, this.canvasWidth / 3],
+            [(this.canvasHeight - this.canvasWidth / 3) / 2, this.canvasWidth / 3],
+        ];
+    },
+    replaceImg(img, maxWidth, maxHeight) {
+        this.img = img;
+        this.fitSize(maxWidth, maxHeight);
+        this.draw();
     },
 };
 
