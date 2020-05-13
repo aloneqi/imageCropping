@@ -17,7 +17,7 @@ ImageCropping.prototype = {
         this.lineDash = [5, 5]; // 虚线间隔宽度
         this.borderWidth = 2; // 边框宽度
 
-        this.canvas.onmouseover = function () {
+        this.canvas.onmouseenter = function () {
             this.isMouseover = true;
             this.isThrottle = true; // 开启帧循环
             this.throttle(); // 运行帧循环
@@ -44,7 +44,7 @@ ImageCropping.prototype = {
             }
         }.bind(this);
 
-        this.canvas.onmouseout = this.canvas.onmouseup = function (e) {
+        this.canvas.onmouseleave = this.canvas.onmouseup = function (e) {
             // 这个判断暂时没用，这是为了将来可能兼容web端而做准备，填坑靠缘分
             if (!this.isMouseover || e.type === 'mouseout') {
                 this.isThrottle = false;
