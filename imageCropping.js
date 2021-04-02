@@ -46,7 +46,7 @@ ImageCropping.prototype = {
 
         this.canvas.onmouseleave = this.canvas.onmouseup = function (e) {
             // 这个判断暂时没用，这是为了将来可能兼容web端而做准备，填坑靠缘分
-            if (!this.isMouseover || e.type === 'mouseout') {
+            if (!this.isMouseover || e.type === 'mouseleave') {
                 this.isThrottle = false;
                 this.isMouseover && (this.isMouseover = false);
             }
