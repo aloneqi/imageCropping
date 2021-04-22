@@ -2,9 +2,12 @@
 
 支持两种裁剪方式。
 
+<p>
 <img src="./readmeImg/picture1.png" width="300" />
 <span> OR </sapn>
 <img src="./readmeImg/picture2.png" width="300" />
+</p>
+
 <br/>
 
 ## 代码片段
